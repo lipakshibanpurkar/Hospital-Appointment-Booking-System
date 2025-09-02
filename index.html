@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediCare - Hospital Appointment System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f7ff;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a75bc 0%, #0d47a1 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: #a7d0f9;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #1a75bc;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #0d47a1;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-success {
+            background: #28a745;
+        }
+        
+        .btn-success:hover {
+            background: #218838;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin: 50px 0 30px;
+            color: #1a75bc;
+            font-size: 2rem;
+        }
+        
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .card-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .card:hover .card-img img {
+            transform: scale(1.1);
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .card h3 {
+            color: #1a75bc;
+            margin-bottom: 10px;
+        }
+        
+        .card p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .rating {
+            color: #ffc107;
+            margin: 10px 0;
+        }
+        
+        .appointment-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 40px 0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .disease-info {
+            background: #e8f4ff;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 40px 0;
+        }
+        
+        .disease-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .disease-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .disease-item h3 {
+            color: #1a75bc;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .appointment-requests {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 40px 0;
+        }
+        
+        .request-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .request-info {
+            flex: 1;
+        }
+        
+        .request-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-declined {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .doctor-login {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 40px 0;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .doctor-view {
+            display: none;
+        }
+        
+        .doctor-appointments {
+            margin-top: 30px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        footer {
+            background: #1a75bc;
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: white;
+        }
+        
+        .footer-section p {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section a {
+            color: #a7d0f9;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background: white;
+            color: #1a75bc;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            
+            nav {
+                width: 100%;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 20px;
+            }
+            
+            nav ul li {
+                text-align: center;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .request-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .request-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .card-content {
+                padding: 15px;
+            }
+            
+            .appointment-form, .doctor-login {
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-hospital"></i>
+                    <h1>MediCare Hospital</h1>
+                </div>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#doctors">Doctors</a></li>
+                        <li><a href="#appointment">Appointment</a></li>
+                        <li><a href="#diseases">Diseases Info</a></li>
+                        <li><a href="#doctor-login">Doctor Login</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Your Health is Our Priority</h2>
+                <p>Book appointments with top specialists, get information about diseases, and receive the best medical care all in one place.</p>
+                <a href="#appointment" class="btn">Book an Appointment</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Doctors Section -->
+    <section id="doctors">
+        <div class="container">
+            <h2 class="section-title">Our Specialist Doctors</h2>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80" alt="Dr. Sarah Johnson">
+                    </div>
+                    <div class="card-content">
+                        <h3>Dr. Sarah Johnson</h3>
+                        <p><strong>Cardiologist</strong></p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.5 (120 reviews)</span>
+                        </div>
+                        <p>10+ years of experience in treating heart diseases. Specialized in interventional cardiology.</p>
+                        <button class="btn" onclick="openAppointmentModal('Dr. Sarah Johnson', 'Cardiology')">Book Appointment</button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80" alt="Dr. Michael Chen">
+                    </div>
+                    <div class="card-content">
+                        <h3>Dr. Michael Chen</h3>
+                        <p><strong>Neurologist</strong></p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>4.9 (98 reviews)</span>
+                        </div>
+                        <p>Expert in treating disorders of the nervous system. Specialized in epilepsy treatment.</p>
+                        <button class="btn" onclick="openAppointmentModal('Dr. Michael Chen', 'Neurology')">Book Appointment</button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80" alt="Dr. Emily Rodriguez">
+                    </div>
+                    <div class="card-content">
+                        <h3>Dr. Emily Rodriguez</h3>
+                        <p><strong>Pediatrician</strong></p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>4.2 (135 reviews)</span>
+                        </div>
+                        <p>Dedicated to children's healthcare with a gentle approach. Specialized in neonatal care.</p>
+                        <button class="btn" onclick="openAppointmentModal('Dr. Emily Rodriguez', 'Pediatrics')">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appointment Modal -->
+    <div class="modal" id="appointmentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Book Appointment with <span id="modalDoctorName"></span></h2>
+                <button class="close-modal" onclick="closeAppointmentModal()">&times;</button>
+            </div>
+            <form id="appointmentForm">
+                <input type="hidden" id="selectedDoctor" value="">
+                <input type="hidden" id="selectedDepartment" value="">
+                
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" placeholder="Your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Your email address" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="Your phone number" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="date">Preferred Date</label>
+                    <input type="date" id="date" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="time">Preferred Time</label>
+                    <select id="time" required>
+                        <option value="">Select Time</option>
+                        <option value="09:00">09:00 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="12:00">12:00 PM</option>
+                        <option value="14:00">02:00 PM</option>
+                        <option value="15:00">03:00 PM</option>
+                        <option value="16:00">04:00 PM</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="symptoms">Symptoms or Reason for Visit</label>
+                    <textarea id="symptoms" placeholder="Please describe your symptoms or reason for appointment"></textarea>
+                </div>
+                
+                <button type="submit" class="btn">Book Appointment Now</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Appointment Section -->
+    <section id="appointment">
+        <div class="container">
+            <h2 class="section-title">Book an Appointment</h2>
+            <div class="appointment-form">
+                <form id="generalAppointmentForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="apptFullName">Full Name</label>
+                            <input type="text" id="apptFullName" placeholder="Your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="apptEmail">Email Address</label>
+                            <input type="email" id="apptEmail" placeholder="Your email address" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="apptPhone">Phone Number</label>
+                            <input type="tel" id="apptPhone" placeholder="Your phone number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="apptDate">Preferred Date</label>
+                            <input type="date" id="apptDate" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="apptDepartment">Department</label>
+                            <select id="apptDepartment" required>
+                                <option value="">Select Department</option>
+                                <option value="cardiology">Cardiology</option>
+                                <option value="neurology">Neurology</option>
+                                <option value="pediatrics">Pediatrics</option>
+                                <option value="orthopedics">Orthopedics</option>
+                                <option value="dermatology">Dermatology</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="apptDoctor">Preferred Doctor</label>
+                            <select id="apptDoctor" required>
+                                <option value="">Select Doctor</option>
+                                <option value="dr-johnson">Dr. Sarah Johnson</option>
+                                <option value="dr-chen">Dr. Michael Chen</option>
+                                <option value="dr-rodriguez">Dr. Emily Rodriguez</option>
+                                <option value="dr-williams">Dr. James Williams</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="apptSymptoms">Symptoms or Reason for Visit</label>
+                        <textarea id="apptSymptoms" placeholder="Please describe your symptoms or reason for appointment"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">Book Appointment Now</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Doctor Login Section -->
+    <section id="doctor-login">
+        <div class="container">
+            <h2 class="section-title">Doctor Login</h2>
+            <div class="doctor-login">
+                <div class="form-group">
+                    <label for="doctorSelect">Select Doctor</label>
+                    <select id="doctorSelect">
+                        <option value="">Select Doctor</option>
+                        <option value="Dr. Sarah Johnson">Dr. Sarah Johnson</option>
+                        <option value="Dr. Michael Chen">Dr. Michael Chen</option>
+                        <option value="Dr. Emily Rodriguez">Dr. Emily Rodriguez</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="doctorPassword">Password</label>
+                    <input type="password" id="doctorPassword" placeholder="Enter password">
+                </div>
+                
+                <button class="btn" onclick="doctorLogin()">Login</button>
+            </div>
+            
+            <div class="doctor-view" id="doctorView">
+                <h2 class="section-title">Appointment Requests</h2>
+                <div class="appointment-requests" id="doctorAppointments">
+                    <!-- Appointments will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diseases Information Section -->
+    <section id="diseases">
+        <div class="container">
+            <h2 class="section-title">Diseases Information</h2>
+            <div class="disease-info">
+                <p>Below you'll find information about common diseases, their symptoms, and recommended treatments. Always consult with a healthcare professional for accurate diagnosis and treatment.</p>
+                
+                <div class="disease-list">
+                    <div class="disease-item">
+                        <h3>Hypertension</h3>
+                        <p><strong>Symptoms:</strong> Often no symptoms, but can include headaches, shortness of breath, nosebleeds</p>
+                        <p><strong>Treatment:</strong> Lifestyle changes, medication, regular monitoring</p>
+                    </div>
+                    
+                    <div class="disease-item">
+                        <h3>Diabetes</h3>
+                        <p><strong>Symptoms:</strong> Increased thirst, frequent urination, hunger, fatigue, blurred vision</p>
+                        <p><strong>Treatment:</strong> Insulin therapy, oral medications, diet management, exercise</p>
+                    </div>
+                    
+                    <div class="disease-item">
+                        <h3>Asthma</h3>
+                        <p><strong>Symptoms:</strong> Shortness of breath, chest tightness, wheezing, coughing</p>
+                        <p><strong>Treatment:</strong> Inhalers, avoiding triggers, long-term control medications</p>
+                    </div>
+                    
+                    <div class="disease-item">
+                        <h3>Arthritis</h3>
+                        <p><strong>Symptoms:</strong> Joint pain, stiffness, swelling, decreased range of motion</p>
+                        <p><strong>Treatment:</strong> Pain relievers, anti-inflammatory drugs, physical therapy</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>MediCare Hospital provides comprehensive healthcare services with state-of-the-art facilities and experienced medical professionals.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Information</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Medical Drive, Health City</p>
+                    <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+                    <p><i class="fas fa-envelope"></i> info@medicare-hospital.com</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <p>Stay connected with us on social media</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 MediCare Hospital. All rights reserved.Lipakshi</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Store appointments in localStorage
+        if (!localStorage.getItem('appointments')) {
+            localStorage.setItem('appointments', JSON.stringify([]));
+        }
+        
+        // Mobile menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            const nav = document.getElementById('mainNav');
+            nav.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking on a link
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                const nav = document.getElementById('mainNav');
+                if (window.innerWidth <= 768) {
+                    nav.classList.remove('active');
+                }
+            });
+        });
+        
+        // Open appointment modal
+        function openAppointmentModal(doctorName, department) {
+            document.getElementById('modalDoctorName').textContent = doctorName;
+            document.getElementById('selectedDoctor').value = doctorName;
+            document.getElementById('selectedDepartment').value = department;
+            document.getElementById('appointmentModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Close appointment modal
+        function closeAppointmentModal() {
+            document.getElementById('appointmentModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Form submission handling for modal form
+        document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const symptoms = document.getElementById('symptoms').value;
+            const doctor = document.getElementById('selectedDoctor').value;
+            const department = document.getElementById('selectedDepartment').value;
+            
+            // Create appointment object
+            const appointment = {
+                id: Date.now(),
+                patientName: name,
+                email: email,
+                phone: phone,
+                date: date,
+                time: time,
+                symptoms: symptoms,
+                doctor: doctor,
+                department: department,
+                status: 'pending'
+            };
+            
+            // Save to localStorage
+            const appointments = JSON.parse(localStorage.getItem('appointments'));
+            appointments.push(appointment);
+            localStorage.setItem('appointments', JSON.stringify(appointments));
+            
+            // Show confirmation message
+            alert(`Thank you, ${name}! Your appointment request with ${doctor} has been received. The doctor will review your request shortly.`);
+            
+            // Reset form and close modal
+            this.reset();
+            closeAppointmentModal();
+        });
+        
+        // Form submission handling for general appointment form
+        document.getElementById('generalAppointmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('apptFullName').value;
+            const email = document.getElementById('apptEmail').value;
+            const phone = document.getElementById('apptPhone').value;
+            const date = document.getElementById('apptDate').value;
+            const department = document.getElementById('apptDepartment').value;
+            const doctorSelect = document.getElementById('apptDoctor');
+            const doctorText = doctorSelect.options[doctorSelect.selectedIndex].text;
+            const symptoms = document.getElementById('apptSymptoms').value;
+            
+            // Create appointment object
+            const appointment = {
+                id: Date.now(),
+                patientName: name,
+                email: email,
+                phone: phone,
+                date: date,
+                symptoms: symptoms,
+                doctor: doctorText,
+                department: department,
+                status: 'pending'
+            };
+            
+            // Save to localStorage
+            const appointments = JSON.parse(localStorage.getItem('appointments'));
+            appointments.push(appointment);
+            localStorage.setItem('appointments', JSON.stringify(appointments));
+            
+            // Show confirmation message
+            alert(`Thank you, ${name}! Your appointment request with ${doctorText} has been received. The doctor will review your request shortly.`);
+            
+            // Reset form
+            this.reset();
+        });
+        
+        // Doctor login function
+        function doctorLogin() {
+            const doctorSelect = document.getElementById('doctorSelect');
+            const password = document.getElementById('doctorPassword').value;
+            
+            if (!doctorSelect.value) {
+                alert('Please select a doctor');
+                return;
+            }
+            
+            // Simple password check (all doctors use "123")
+            if (password === '123') {
+                // Show doctor view
+                document.getElementById('doctorView').style.display = 'block';
+                
+                // Load appointments for this doctor
+                loadDoctorAppointments(doctorSelect.value);
+                
+                // Scroll to doctor view
+                document.getElementById('doctorView').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                alert('Incorrect password. Please try again.');
+            }
+        }
+        
+        // Load appointments for a specific doctor
+        function loadDoctorAppointments(doctorName) {
+            const appointments = JSON.parse(localStorage.getItem('appointments'));
+            const doctorAppointments = appointments.filter(apt => apt.doctor === doctorName);
+            
+            const appointmentsContainer = document.getElementById('doctorAppointments');
+            appointmentsContainer.innerHTML = '';
+            
+            if (doctorAppointments.length === 0) {
+                appointmentsContainer.innerHTML = '<p>No appointment requests found.</p>';
+                return;
+            }
+            
+            doctorAppointments.forEach(appointment => {
+                const appointmentElement = document.createElement('div');
+                appointmentElement.classList.add('request-item');
+                appointmentElement.innerHTML = `
+                    <div class="request-info">
+                        <h3>${appointment.patientName}</h3>
+                        <p>Requested appointment on <strong>${appointment.date}</strong>${appointment.time ? ' at ' + appointment.time : ''}</p>
+                        <p>Phone: ${appointment.phone} | Email: ${appointment.email}</p>
+                        <p>Symptoms: ${appointment.symptoms}</p>
+                    </div>
+                    <div class="request-actions">
+                        <span class="status status-${appointment.status}">${appointment.status}</span>
+                        ${appointment.status === 'pending' ? `
+                            <button class="btn btn-success" onclick="updateAppointmentStatus(${appointment.id}, 'approved')">Accept</button>
+                            <button class="btn btn-danger" onclick="updateAppointmentStatus(${appointment.id}, 'declined')">Decline</button>
+                        ` : ''}
+                    </div>
+                `;
+                
+                appointmentsContainer.appendChild(appointmentElement);
+            });
+        }
+        
+        // Update appointment status
+        function updateAppointmentStatus(appointmentId, status) {
+            const appointments = JSON.parse(localStorage.getItem('appointments'));
+            const appointmentIndex = appointments.findIndex(apt => apt.id === appointmentId);
+            
+            if (appointmentIndex !== -1) {
+                appointments[appointmentIndex].status = status;
+                localStorage.setItem('appointments', JSON.stringify(appointments));
+                
+                // Reload appointments
+                const doctorSelect = document.getElementById('doctorSelect');
+                loadDoctorAppointments(doctorSelect.value);
+            }
+        }
+        
+        // Close modal if clicked outside
+        window.addEventListener('click', function(e) {
+            const modal = document.getElementById('appointmentModal');
+            if (e.target === modal) {
+                closeAppointmentModal();
+            }
+        });
+        
+        // Update doctor options based on department selection
+        document.getElementById('apptDepartment').addEventListener('change', function() {
+            const department = this.value;
+            const doctorSelect = document.getElementById('apptDoctor');
+            
+            // Reset doctor options
+            doctorSelect.innerHTML = '<option value="">Select Doctor</option>';
+            
+            // Add doctors based on department
+            if (department === 'cardiology') {
+                doctorSelect.innerHTML += '<option value="dr-johnson">Dr. Sarah Johnson</option>';
+            } else if (department === 'neurology') {
+                doctorSelect.innerHTML += '<option value="dr-chen">Dr. Michael Chen</option>';
+            } else if (department === 'pediatrics') {
+                doctorSelect.innerHTML += '<option value="dr-rodriguez">Dr. Emily Rodriguez</option>';
+            } else if (department === 'orthopedics' || department === 'dermatology') {
+                doctorSelect.innerHTML += '<option value="dr-williams">Dr. James Williams</option>';
+            } else {
+                // If no department selected or other departments, show all doctors
+                doctorSelect.innerHTML += `
+                    <option value="dr-johnson">Dr. Sarah Johnson</option>
+                    <option value="dr-chen">Dr. Michael Chen</option>
+                    <option value="dr-rodriguez">Dr. Emily Rodriguez</option>
+                    <option value="dr-williams">Dr. James Williams</option>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>
